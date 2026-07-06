@@ -1,0 +1,21 @@
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# Editores
+.vscode/
+.idea/
+*.swp
+
+# Segredos / ambiente — NUNCA versionar
+.env
+.env.*
+*.local
+
+# Logs
+*.log
+
+# Dependências / build (caso adicione ferramentas no futuro)
+node_modules/
+dist/
+.cache/

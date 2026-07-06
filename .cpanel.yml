@@ -1,0 +1,7 @@
+---
+deployment:
+  tasks:
+    # Troque USUARIO pelo seu usuário do cPanel (HostGator)
+    - export DEPLOYPATH=/home/USUARIO/public_html/
+    - /bin/cp -f index.html $DEPLOYPATH
+    - /bin/cp -Rf assets $DEPLOYPATH 2>/dev/null || true
