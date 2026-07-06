@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Duarttes Tech · Engenharia digital para negócios</title>
+<meta name="description" content="Construir, operar e monitorar a infraestrutura digital de negócios em Americana e região. Sites, WhatsApp, suporte por SLA (GLPI) e monitoramento 24/7 (Zabbix + Grafana)." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#09090F;
+    --bg-2:#0C0C16;
+    --surface:#13131F;
+    --surface-2:#171726;
+    --violet:#8B5CF6;
+    --violet-bright:#A78BFA;
+    --cyan:#22D3EE;
+    --cyan-deep:#06B6D4;
+    --text:#ECECF6;
+    --muted:#9A9AB6;
+    --line:rgba(255,255,255,.09);
+    --line-2:rgba(255,255,255,.055);
+    --grad:linear-gradient(100deg,var(--violet),var(--cyan));
+    --maxw:1160px;
+    --ease:cubic-bezier(.2,.7,.2,1);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;background:var(--bg);color:var(--text);
+    font-family:"Inter",system-ui,sans-serif;font-size:17px;line-height:1.6;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  }
+  h1,h2,h3{font-family:"Space Grotesk",sans-serif;font-weight:700;line-height:1.06;letter-spacing:-.02em;margin:0}
+  p{margin:0}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  .eyebrow{font-family:"JetBrains Mono",monospace;font-size:12px;font-weight:500;letter-spacing:.16em;text-transform:uppercase}
+  .eyebrow.grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+  .btn{display:inline-flex;align-items:center;gap:9px;font-family:"Inter",sans-serif;font-weight:600;font-size:16px;padding:13px 22px;border-radius:12px;border:1px solid transparent;cursor:pointer;transition:transform .2s var(--ease),box-shadow .2s,background .2s,border-color .2s}
+  .btn-primary{background:var(--violet);color:#fff;box-shadow:0 10px 30px -10px rgba(139,92,246,.7)}
+  .btn-primary:hover{background:var(--violet-bright);transform:translateY(-2px)}
+  .btn-ghost{background:rgba(255,255,255,.03);border-color:var(--line);color:var(--text)}
+  .btn-ghost:hover{border-color:var(--violet);color:#fff}
+
+  /* Nav */
+  header.nav{position:sticky;top:0;z-index:50;background:rgba(9,9,15,.72);backdrop-filter:blur(14px);border-bottom:1px solid var(--line-2)}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;height:70px}
+  .brand{display:flex;align-items:center;gap:11px;font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:20px;letter-spacing:-.01em}
+  .brand svg{width:26px;height:26px}
+  .nav-links{display:flex;gap:32px;align-items:center}
+  .nav-links a{font-size:15px;color:var(--muted);font-weight:500;transition:color .2s}
+  .nav-links a:hover{color:var(--text)}
+  .nav-cta{display:flex;align-items:center;gap:14px}
+  .menu-btn{display:none;background:none;border:0;cursor:pointer;padding:6px}
+  .menu-btn span{display:block;width:22px;height:2px;background:var(--text);margin:4px 0;transition:.25s}
+
+  /* Hero */
+  .hero{position:relative;padding:84px 0 96px}
+  .hero::before{content:"";position:absolute;top:-160px;left:50%;transform:translateX(-30%);width:760px;height:560px;background:radial-gradient(closest-side,rgba(139,92,246,.28),transparent 70%);filter:blur(20px);z-index:0;pointer-events:none}
+  .hero::after{content:"";position:absolute;top:-40px;right:-80px;width:520px;height:420px;background:radial-gradient(closest-side,rgba(34,211,238,.18),transparent 70%);filter:blur(20px);z-index:0;pointer-events:none}
+  .hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:1.02fr .98fr;gap:56px;align-items:center}
+  .hero h1{font-size:clamp(40px,5.6vw,64px);margin:20px 0 0}
+  .hero-sub{font-size:19px;color:var(--muted);margin-top:22px;max-width:36ch}
+  .hero-actions{display:flex;gap:14px;margin-top:32px;flex-wrap:wrap}
+  .hero-meta{margin-top:26px;font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--muted);letter-spacing:.04em}
+
+  /* Signature: status panel */
+  .panel{background:linear-gradient(180deg,var(--surface),var(--bg-2));border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 40px 80px -40px rgba(0,0,0,.8)}
+  .panel-top{display:flex;align-items:center;justify-content:space-between;padding-bottom:14px;border-bottom:1px solid var(--line-2)}
+  .panel-top .t{font-family:"JetBrains Mono",monospace;font-size:12.5px;color:var(--muted);letter-spacing:.05em}
+  .panel-top .live{display:inline-flex;align-items:center;gap:7px;font-family:"JetBrains Mono",monospace;font-size:11.5px;color:var(--cyan);letter-spacing:.08em;text-transform:uppercase}
+  .pulse{width:8px;height:8px;border-radius:50%;background:var(--cyan);box-shadow:0 0 0 0 rgba(34,211,238,.6);animation:pulse 2s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(34,211,238,.55)}70%{box-shadow:0 0 0 8px rgba(34,211,238,0)}100%{box-shadow:0 0 0 0 rgba(34,211,238,0)}}
+  .row{display:flex;align-items:center;justify-content:space-between;padding:13px 2px;border-bottom:1px solid var(--line-2)}
+  .row:last-child{border-bottom:0}
+  .row .svc{display:flex;align-items:center;gap:11px;font-size:14.5px}
+  .row .dot{width:9px;height:9px;border-radius:50%;background:var(--cyan);flex-shrink:0;box-shadow:0 0 8px rgba(34,211,238,.8)}
+  .row .up{font-family:"JetBrains Mono",monospace;font-size:12.5px;color:var(--muted)}
+  .row .up b{color:var(--text);font-weight:500}
+  .spark{display:flex;align-items:flex-end;gap:3px;height:26px;margin-top:14px}
+  .spark i{flex:1;background:linear-gradient(180deg,var(--violet),rgba(34,211,238,.5));border-radius:2px;opacity:.85;animation:bar 2.4s ease-in-out infinite}
+  @keyframes bar{0%,100%{transform:scaleY(.55)}50%{transform:scaleY(1)}}
+  .panel-foot{display:flex;align-items:center;justify-content:space-between;margin-top:14px;font-family:"JetBrains Mono",monospace;font-size:11.5px;color:var(--muted)}
+
+  /* Section shell */
+  section{position:relative;padding:92px 0}
+  .band{background:var(--bg-2);border-top:1px solid var(--line-2);border-bottom:1px solid var(--line-2)}
+  .sec-head{max-width:62ch}
+  .sec-head h2{font-size:clamp(28px,3.6vw,42px);margin-top:14px}
+  .sec-head p.lead{color:var(--muted);font-size:18px;margin-top:14px}
+
+  /* Pillars */
+  .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:46px}
+  .pillar{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:28px;position:relative;overflow:hidden}
+  .pillar::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--grad)}
+  .pillar .ix{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--cyan);letter-spacing:.1em}
+  .pillar h3{font-size:23px;margin:14px 0 10px}
+  .pillar p{color:var(--muted);font-size:15px}
+  .pillar .tags{margin-top:16px;font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--muted);letter-spacing:.02em}
+
+  /* Services grid */
+  .svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:46px}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:26px;transition:transform .25s var(--ease),border-color .25s,box-shadow .25s}
+  .card:hover{transform:translateY(-4px);border-color:var(--violet);box-shadow:0 26px 50px -30px rgba(139,92,246,.5)}
+  .card .ico{width:44px;height:44px;border-radius:11px;background:rgba(139,92,246,.13);color:var(--violet-bright);display:grid;place-items:center;margin-bottom:16px}
+  .card .ico svg{width:22px;height:22px}
+  .card .ml{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+  .card h3{font-size:18px;margin:6px 0 8px}
+  .card p{color:var(--muted);font-size:14.5px}
+
+  /* Plans */
+  .plans{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:46px;align-items:start}
+  .plan{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:30px 26px;position:relative}
+  .plan.feat{border-color:var(--violet);background:linear-gradient(180deg,rgba(139,92,246,.10),var(--surface));box-shadow:0 30px 60px -34px rgba(139,92,246,.6)}
+  .plan .badge{position:absolute;top:-12px;left:26px;font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;background:var(--grad);color:#0b0b12;font-weight:600;padding:5px 11px;border-radius:100px}
+  .plan .pname{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:20px}
+  .plan .ptag{color:var(--muted);font-size:14px;margin-top:4px;min-height:38px}
+  .plan .price{margin:18px 0 4px;font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:30px}
+  .plan .price span{font-family:"JetBrains Mono",monospace;font-size:13px;color:var(--muted);font-weight:400}
+  .plan .sla{display:inline-flex;align-items:center;gap:7px;font-family:"JetBrains Mono",monospace;font-size:11.5px;color:var(--cyan);background:rgba(34,211,238,.08);border:1px solid rgba(34,211,238,.25);padding:6px 11px;border-radius:100px;margin:14px 0}
+  .plan ul{list-style:none;padding:0;margin:12px 0 24px}
+  .plan li{display:flex;gap:10px;align-items:flex-start;font-size:14.5px;color:var(--text);padding:7px 0}
+  .plan li svg{width:16px;height:16px;flex-shrink:0;margin-top:3px;color:var(--violet-bright)}
+  .plan .btn{width:100%;justify-content:center}
+  .plans-note{margin-top:22px;font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--muted);text-align:center}
+
+  /* Products (infra) */
+  .prod{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:46px}
+  .prod-card{background:linear-gradient(180deg,var(--surface-2),var(--surface));border:1px solid var(--line);border-radius:18px;padding:30px}
+  .prod-card .stack{display:inline-flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+  .prod-card .chip{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.06em;color:var(--cyan);border:1px solid rgba(34,211,238,.3);border-radius:100px;padding:5px 11px}
+  .prod-card h3{font-size:22px;margin-bottom:10px}
+  .prod-card p{color:var(--muted);font-size:15px}
+  .prod-card ul{list-style:none;padding:0;margin:16px 0 0}
+  .prod-card li{display:flex;gap:10px;align-items:flex-start;font-size:14.5px;padding:6px 0;color:var(--text)}
+  .prod-card li b{color:var(--cyan);font-family:"JetBrains Mono",monospace;font-weight:500;font-size:13px}
+
+  /* Segments */
+  .seg-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:46px}
+  .seg{display:flex;gap:16px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:24px}
+  .seg .mk{width:6px;border-radius:100px;background:var(--grad);flex-shrink:0}
+  .seg h3{font-size:18px;margin-bottom:6px}
+  .seg p{color:var(--muted);font-size:14.5px}
+
+  /* Why */
+  .why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:46px}
+  .why-card{padding:24px;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+  .why-card .ml{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--cyan)}
+  .why-card h3{font-size:18px;margin:12px 0 8px}
+  .why-card p{color:var(--muted);font-size:14px}
+
+  /* CTA */
+  .cta-band{text-align:center;background:radial-gradient(closest-side,rgba(139,92,246,.16),transparent 75%),var(--bg-2)}
+  .cta-band h2{font-size:clamp(30px,4.4vw,48px);max-width:20ch;margin:0 auto}
+  .cta-band p{color:var(--muted);margin:18px auto 0;max-width:48ch;font-size:18px}
+  .cta-actions{display:flex;gap:14px;justify-content:center;margin-top:34px;flex-wrap:wrap}
+
+  /* Footer */
+  footer{background:var(--bg);border-top:1px solid var(--line-2);padding:52px 0 40px;color:var(--muted)}
+  .foot{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap;align-items:flex-start}
+  .foot a{color:var(--muted);transition:color .2s}
+  .foot a:hover{color:var(--text)}
+  .foot-links{display:flex;gap:26px;font-size:15px;flex-wrap:wrap}
+  .foot-legal{margin-top:34px;font-family:"JetBrains Mono",monospace;font-size:12px;color:#63637d;letter-spacing:.03em}
+
+  .wa-float{position:fixed;right:22px;bottom:22px;z-index:60;width:56px;height:56px;border-radius:50%;background:#25D366;display:grid;place-items:center;box-shadow:0 12px 30px -8px rgba(37,211,102,.7);transition:transform .2s var(--ease)}
+  .wa-float:hover{transform:scale(1.08)}
+  .wa-float svg{width:30px;height:30px;fill:#fff}
+
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+  .reveal.in{opacity:1;transform:none}
+
+  @media (max-width:920px){
+    .hero-grid{grid-template-columns:1fr;gap:44px}
+    .hero{padding:56px 0 68px}
+    .pillars,.svc-grid,.plans,.prod,.why-grid{grid-template-columns:1fr 1fr}
+    .seg-grid{grid-template-columns:1fr}
+    section{padding:66px 0}
+    .nav-links{display:none}
+    .menu-btn{display:block}
+    .nav-links.open{display:flex;position:absolute;top:70px;left:0;right:0;flex-direction:column;background:var(--bg-2);border-bottom:1px solid var(--line);padding:18px 24px;gap:16px}
+  }
+  @media (max-width:600px){
+    .pillars,.svc-grid,.plans,.prod,.why-grid{grid-template-columns:1fr}
+    .hero-sub{max-width:none}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{scroll-behavior:auto}
+    .reveal{transition:none;opacity:1;transform:none}
+    .pulse,.spark i{animation:none}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top">
+      <svg viewBox="0 0 32 32" fill="none"><circle cx="7" cy="16" r="3.4" fill="#8B5CF6"/><circle cx="24" cy="8" r="3.4" fill="#22D3EE"/><circle cx="24" cy="24" r="3.4" fill="#22D3EE"/><path d="M9.6 14.6 21.4 9.4M9.6 17.4l11.8 5.2" stroke="#6b6b85" stroke-width="1.6"/></svg>
+      Duarttes Tech
+    </a>
+    <nav class="nav-links" id="navlinks">
+      <a href="#servicos">Serviços</a>
+      <a href="#planos">Planos</a>
+      <a href="#produtos">Infra &amp; Monitoramento</a>
+      <a href="#segmentos">Para o seu ramo</a>
+    </nav>
+    <div class="nav-cta">
+      <a class="btn btn-primary" href="https://wa.me/55XXXXXXXXXXX" target="_blank" rel="noopener">Auditoria gratuita</a>
+      <button class="menu-btn" id="menuBtn" aria-label="Abrir menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow grad">Engenharia digital · Americana e região</span>
+      <h1>Coloco seu negócio no ar. E cuido pra que ele <span class="grad-text">nunca saia</span>.</h1>
+      <p class="hero-sub">Do site ao servidor: eu construo, opero e monitoro a infraestrutura digital do seu negócio. Você cuida do cliente — a parte técnica é comigo.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="https://wa.me/55XXXXXXXXXXX" target="_blank" rel="noopener">Peça sua auditoria gratuita</a>
+        <a class="btn btn-ghost" href="#planos">Ver planos</a>
+      </div>
+      <p class="hero-meta">// construir &nbsp;·&nbsp; operar &nbsp;·&nbsp; monitorar</p>
+    </div>
+
+    <!-- SIGNATURE: status panel -->
+    <div class="panel reveal" aria-label="Painel de status de exemplo">
+      <div class="panel-top">
+        <span class="t">duarttes · status</span>
+        <span class="live"><span class="pulse"></span>ao vivo</span>
+      </div>
+      <div class="row"><span class="svc"><span class="dot"></span>Site institucional</span><span class="up"><b>99.98%</b> uptime</span></div>
+      <div class="row"><span class="svc"><span class="dot"></span>Bot de WhatsApp</span><span class="up"><b>online</b> · 42ms</span></div>
+      <div class="row"><span class="svc"><span class="dot"></span>Agendamento</span><span class="up"><b>online</b></span></div>
+      <div class="row"><span class="svc"><span class="dot"></span>Servidor / banco</span><span class="up"><b>saudável</b></span></div>
+      <div class="spark" aria-hidden="true">
+        <i style="animation-delay:0s"></i><i style="animation-delay:.1s"></i><i style="animation-delay:.2s"></i><i style="animation-delay:.3s"></i><i style="animation-delay:.4s"></i><i style="animation-delay:.5s"></i><i style="animation-delay:.6s"></i><i style="animation-delay:.7s"></i><i style="animation-delay:.8s"></i><i style="animation-delay:.9s"></i><i style="animation-delay:1s"></i><i style="animation-delay:1.1s"></i><i style="animation-delay:1.2s"></i><i style="animation-delay:1.3s"></i>
+      </div>
+      <div class="panel-foot"><span>último alerta: nenhum</span><span>monitorado 24/7</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- PILLARS -->
+<section class="band" id="como">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow grad">Como eu trabalho</span>
+      <h2>Três camadas. Você entra onde precisa e sobe conforme cresce.</h2>
+    </div>
+    <div class="pillars">
+      <div class="pillar reveal">
+        <span class="ix">01 / CONSTRUIR</span>
+        <h3>Presença</h3>
+        <p>Coloco seu negócio no mapa digital: site, WhatsApp automático, agendamento e Google. A porta de entrada do cliente.</p>
+        <p class="tags">site · bot · agenda · cardápio · google</p>
+      </div>
+      <div class="pillar reveal">
+        <span class="ix">02 / OPERAR</span>
+        <h3>Suporte gerenciado</h3>
+        <p>Portal de chamados com prioridade por plano. Você abre o chamado, eu atendo na ordem certa, com prazo garantido.</p>
+        <p class="tags">chamados · SLA · gestão de ativos · GLPI</p>
+      </div>
+      <div class="pillar reveal">
+        <span class="ix">03 / MONITORAR</span>
+        <h3>Infra vigiada 24/7</h3>
+        <p>Para quem depende do sistema no ar: monitoramento, painéis e alerta que avisa antes do problema virar prejuízo.</p>
+        <p class="tags">uptime · alertas · dashboards · zabbix · grafana</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES (Construir) -->
+<section id="servicos">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow grad">01 · Construir</span>
+      <h2>A presença que transforma quem te procura em cliente.</h2>
+      <p class="lead">Você escolhe só o que precisa. Sem pacote inchado.</p>
+    </div>
+    <div class="svc-grid">
+      <div class="card reveal"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18M8 21h8"/></svg></div><span class="ml">Site</span><h3>Site e landing page</h3><p>Rápido, bom no celular, aparece no Google e vira contato.</p></div>
+      <div class="card reveal"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 21l2.1-5.4A8.5 8.5 0 1 1 21 11.5Z"/></svg></div><span class="ml">WhatsApp</span><h3>Chatbot no WhatsApp</h3><p>Atende, tira dúvida e qualifica cliente 24h — mesmo fechado.</p></div>
+      <div class="card reveal"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18M8 2v4M16 2v4M9 15l2 2 4-4"/></svg></div><span class="ml">Agenda</span><h3>Agendamento online</h3><p>O cliente marca sozinho. Menos falta, agenda mais cheia.</p></div>
+      <div class="card reveal"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 3h16l-1 7H5L4 3ZM6 10v10h12V10M9 14h6"/></svg></div><span class="ml">Pedidos</span><h3>Cardápio e pedido digital</h3><p>Pedido direto com você — sem a taxa gorda do aplicativo.</p></div>
+      <div class="card reveal"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8 2 5 5 5 9c0 5 7 13 7 13s7-8 7-13c0-4-3-7-7-7Z"/><circle cx="12" cy="9" r="2.5"/></svg></div><span class="ml">Google</span><h3>Google e avaliações</h3><p>Seu negócio completo no Maps, bem posicionado e respondido.</p></div>
+      <div class="card reveal"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg></div><span class="ml">Automação</span><h3>Automações e integrações</h3><p>WhatsApp, agenda, planilha e sistema conversando sozinhos.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PLANS -->
+<section class="band" id="planos">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow grad">02 · Operar</span>
+      <h2>Assinaturas com prioridade de verdade.</h2>
+      <p class="lead">Todo cliente entra num plano. O plano define a prioridade na fila de chamados — quanto mais alto, mais rápido você é atendido. Simples e transparente.</p>
+    </div>
+    <div class="plans">
+      <div class="plan reveal">
+        <div class="pname">Essencial</div>
+        <div class="ptag">Para quem só quer estar no ar e bem cuidado.</div>
+        <div class="price">R$ —<span> /mês</span></div>
+        <div class="sla">SLA · resposta em até 2 dias úteis</div>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg>Site e presença no ar</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg>Suporte por e-mail</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg>1 ajuste por mês</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg>Hospedagem monitorada</li>
+        </ul>
+        <a class="btn btn-ghost" href="https://wa.me/55XXXXXXXXXXX" target="_blank" rel="noopener">Começar</a>
+      </div>
+
+      <div class="plan feat reveal">
+        <span class="badge">Mais escolhido</span>
+        <div class="pname">Pro</div>
+        <div class="ptag">Para negócios que dependem do digital no dia a dia.</div>
+        <div class="price">R$ —<span> /mês</span></div>
+        <div class="sla">SLA · resposta em até 4 horas úteis</div>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg>Tudo do Essencial</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg>Portal de chamados (GLPI)</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg>Prioridade na fila</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg>Ajustes recorrentes</li>
+        </ul>
+        <a class="btn btn-primary" href="https://wa.me/55XXXXXXXXXXX" target="_blank" rel="noopener">Assinar Pro</a>
+      </div>
+
+      <div class="plan reveal">
+        <div class="pname">Gestão</div>
+        <div class="ptag">Para quem não pode ficar fora do ar um minuto.</div>
+        <div class="price">R$ —<span> /mês</span></div>
+        <div class="sla">SLA · resposta em até 1 hora</div>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg>Tudo do Pro</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg>Monitoramento 24/7 (Zabbix + Grafana)</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg>Alertas proativos</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg>Prioridade máxima na fila</li>
+        </ul>
+        <a class="btn btn-ghost" href="https://wa.me/55XXXXXXXXXXX" target="_blank" rel="noopener">Falar sobre Gestão</a>
+      </div>
+    </div>
+    <p class="plans-note">// defina os valores de cada plano — a estrutura de prioridade já está pronta</p>
+  </div>
+</section>
+
+<!-- PRODUCTS (infra) -->
+<section id="produtos">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow grad">03 · Monitorar &amp; gerenciar</span>
+      <h2>Infraestrutura de gente grande, sem time de TI próprio.</h2>
+      <p class="lead">Para empresas, clínicas e indústrias da região que já dependem de sistemas — e não podem correr risco.</p>
+    </div>
+    <div class="prod">
+      <div class="prod-card reveal">
+        <div class="stack"><span class="chip">GLPI</span><span class="chip">ITSM</span></div>
+        <h3>Central de chamados e ativos</h3>
+        <p>Um help desk profissional pra sua empresa: cada solicitação vira chamado com prazo, histórico e responsável. Nada mais se perde no WhatsApp.</p>
+        <ul>
+          <li><b>»</b> Abertura e acompanhamento de chamados por SLA</li>
+          <li><b>»</b> Inventário de equipamentos, licenças e garantias</li>
+          <li><b>»</b> Relatórios do que quebra, quanto custa e onde melhorar</li>
+        </ul>
+      </div>
+      <div class="prod-card reveal">
+        <div class="stack"><span class="chip">Zabbix</span><span class="chip">Grafana</span></div>
+        <h3>Monitoramento e painéis 24/7</h3>
+        <p>Seus servidores, sites e serviços vigiados o tempo todo. Se algo desacelera ou cai, o alerta chega antes do seu cliente perceber.</p>
+        <ul>
+          <li><b>»</b> Uptime, desempenho e capacidade em tempo real</li>
+          <li><b>»</b> Alertas automáticos por WhatsApp, e-mail ou Telegram</li>
+          <li><b>»</b> Painéis Grafana sob medida pro seu negócio</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SEGMENTS -->
+<section class="band" id="segmentos">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow grad">Para o seu ramo</span>
+      <h2>Cada negócio perde de um jeito. A solução acompanha.</h2>
+    </div>
+    <div class="seg-grid">
+      <div class="seg reveal"><div class="mk"></div><div><h3>Concessionárias e lojas de carro</h3><p>Estoque online, captação de lead e WhatsApp que responde o comprador na hora.</p></div></div>
+      <div class="seg reveal"><div class="mk"></div><div><h3>Oficinas e serviços</h3><p>Agendamento online e lembrete automático de revisão. O cliente volta sozinho.</p></div></div>
+      <div class="seg reveal"><div class="mk"></div><div><h3>Restaurantes e bares</h3><p>Cardápio digital, pedido próprio e reserva — sem pagar caro pro aplicativo.</p></div></div>
+      <div class="seg reveal"><div class="mk"></div><div><h3>Clínicas, indústrias e escritórios</h3><p>Chamados, monitoramento e sistemas no ar com suporte por SLA.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section id="porque">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow grad">Por que Duarttes</span>
+      <h2>Quem constrói é quem te atende.</h2>
+    </div>
+    <div class="why-grid">
+      <div class="why-card reveal"><span class="ml">Local</span><h3>Daqui, não de fora</h3><p>Sou da região. Você fala direto comigo, sem call center.</p></div>
+      <div class="why-card reveal"><span class="ml">Direto</span><h3>Um engenheiro, não uma agência</h3><p>Tecnologia de verdade, sem terceirizar pra ninguém.</p></div>
+      <div class="why-card reveal"><span class="ml">Recorrente</span><h3>Cuido depois de entregar</h3><p>Não sumo na entrega. Fico responsável por manter no ar.</p></div>
+      <div class="why-card reveal"><span class="ml">Justo</span><h3>No tamanho do seu caixa</h3><p>Você paga pelo que precisa. Sem contrato que prende.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-band">
+  <div class="wrap">
+    <div class="reveal">
+      <h2>Vamos ver o que dá pra melhorar no seu negócio?</h2>
+      <p>A auditoria é gratuita, sem compromisso e leva 2 minutos pra pedir. Te mando em pontos claros o que está deixando cliente na mesa — e o que dá pra automatizar.</p>
+      <div class="cta-actions">
+        <a class="btn btn-primary" href="https://wa.me/55XXXXXXXXXXX" target="_blank" rel="noopener">Chamar no WhatsApp</a>
+        <a class="btn btn-ghost" href="mailto:contato@duarttestech.com">Mandar um e-mail</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <div class="brand" style="color:var(--text)">
+          <svg viewBox="0 0 32 32" fill="none"><circle cx="7" cy="16" r="3.4" fill="#8B5CF6"/><circle cx="24" cy="8" r="3.4" fill="#22D3EE"/><circle cx="24" cy="24" r="3.4" fill="#22D3EE"/><path d="M9.6 14.6 21.4 9.4M9.6 17.4l11.8 5.2" stroke="#6b6b85" stroke-width="1.6"/></svg>
+          Duarttes Tech
+        </div>
+        <p style="margin-top:12px;max-width:34ch;font-size:15px">Construir, operar e monitorar a infraestrutura digital de negócios em Americana e região.</p>
+      </div>
+      <div class="foot-links">
+        <a href="#servicos">Serviços</a>
+        <a href="#planos">Planos</a>
+        <a href="#produtos">Infra &amp; Monitoramento</a>
+        <a href="https://wa.me/55XXXXXXXXXXX" target="_blank" rel="noopener">WhatsApp</a>
+        <a href="https://instagram.com/duarttestech" target="_blank" rel="noopener">Instagram</a>
+      </div>
+    </div>
+    <p class="foot-legal">© <span id="yr"></span> Duarttes Tech · Americana · SP</p>
+  </div>
+</footer>
+
+<a class="wa-float" href="https://wa.me/55XXXXXXXXXXX" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.5 15.2L2 22l4.9-1.4A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8 0-1.3.7-2 .9-2.2.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5.2.5.7 1.8.8 1.9.1.1.1.3 0 .5-.1.2-.2.4-.3.5-.2.2-.3.4-.2.6.1.2.6 1 1.4 1.7 1 .8 1.7 1.1 1.9 1.2.2.1.4.1.5-.1.1-.2.6-.7.8-.9.2-.3.4-.2.6-.1.2.1 1.5.7 1.7.8.2.1.4.2.4.3.1.1.1.6-.1 1.2Z"/></svg>
+</a>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  const menuBtn=document.getElementById('menuBtn'),navlinks=document.getElementById('navlinks');
+  menuBtn.addEventListener('click',()=>navlinks.classList.toggle('open'));
+  navlinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>navlinks.classList.remove('open')));
+  const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}})},{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
