@@ -110,6 +110,15 @@
   .svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:46px}
   .svc{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:28px;transition:transform .25s var(--ease),box-shadow .25s,border-color .25s}
   .svc:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:#D5EBEC}
+  /* Selo de roadmap. Servico prometido como pronto e o jeito mais rapido de
+     transformar o primeiro cliente no primeiro detrator -- o que ainda nao
+     entregamos fica marcado, nao escondido. */
+  .svc.breve{opacity:.72}
+  .svc .tag-breve{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.04em;
+    text-transform:uppercase;color:#7A6A00;background:#FFF3C4;border:1px solid #F2E08A;
+    padding:3px 9px;border-radius:100px;margin-bottom:8px}
+  .svc-sub{margin:26px 0 14px;font-size:13px;font-weight:800;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--muted)}
   .svc .ico{width:50px;height:50px;border-radius:14px;background:#E6F7F8;display:grid;place-items:center;margin-bottom:18px}
   .svc .ico svg{width:26px;height:26px;stroke:var(--teal);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
   .svc h3{font-size:18px;margin-bottom:8px;color:var(--ink)}
@@ -246,17 +255,17 @@
         <a class="btn btn-primary" href="https://wa.me/5519994896116?text=Quero%20minha%20auditoria%20gratuita" target="_blank" rel="noopener">Solicitar auditoria gratuita</a>
         <a class="btn btn-ghost" href="#planos">Ver planos</a>
       </div>
-      <p class="hero-trust"><b>Sites</b> · <b>WhatsApp</b> · <b>Suporte por SLA</b> · <b>Monitoramento 24/7</b></p>
+      <p class="hero-trust"><b>Sites</b> · <b>Google</b> · <b>WhatsApp</b> · <b>Suporte por SLA</b></p>
     </div>
 
-    <div class="hcard reveal" aria-label="Painel de status de exemplo">
-      <div class="hc-top"><span class="hc-title">status · sua empresa</span><span class="hc-live"><span class="pulse"></span>online</span></div>
-      <div class="hc-row"><span class="hc-svc"><span class="hc-dot"></span>Site institucional</span><span class="hc-val"><b>99.9%</b> uptime</span></div>
-      <div class="hc-row"><span class="hc-svc"><span class="hc-dot"></span>WhatsApp automático</span><span class="hc-val"><b>ativo</b></span></div>
-      <div class="hc-row"><span class="hc-svc"><span class="hc-dot"></span>Agendamento</span><span class="hc-val"><b>online</b></span></div>
-      <div class="hc-row"><span class="hc-svc"><span class="hc-dot"></span>Servidor</span><span class="hc-val"><b>saudável</b></span></div>
+    <div class="hcard reveal" aria-label="Exemplo de auditoria gratuita">
+      <div class="hc-top"><span class="hc-title">auditoria · sua empresa</span><span class="hc-live">exemplo</span></div>
+      <div class="hc-row"><span class="hc-svc"><span class="hc-dot"></span>Site próprio</span><span class="hc-val"><b>não encontrado</b></span></div>
+      <div class="hc-row"><span class="hc-svc"><span class="hc-dot"></span>Perfil no Google</span><span class="hc-val">sem <b>horário</b> e sem <b>fotos</b></span></div>
+      <div class="hc-row"><span class="hc-svc"><span class="hc-dot"></span>Avaliações</span><span class="hc-val"><b>3</b> — poucas</span></div>
+      <div class="hc-row"><span class="hc-svc"><span class="hc-dot"></span>"aberto agora perto de mim"</span><span class="hc-val"><b>não aparece</b></span></div>
       <div class="spark" aria-hidden="true"><i style="animation-delay:0s"></i><i style="animation-delay:.1s"></i><i style="animation-delay:.2s"></i><i style="animation-delay:.3s"></i><i style="animation-delay:.4s"></i><i style="animation-delay:.5s"></i><i style="animation-delay:.6s"></i><i style="animation-delay:.7s"></i><i style="animation-delay:.8s"></i><i style="animation-delay:.9s"></i><i style="animation-delay:1s"></i><i style="animation-delay:1.1s"></i><i style="animation-delay:1.2s"></i><i style="animation-delay:1.3s"></i></div>
-      <div class="hc-foot">monitorado 24/7</div>
+      <div class="hc-foot">é isso que a auditoria gratuita mostra do seu negócio</div>
     </div>
   </div>
 </section>
@@ -286,11 +295,11 @@
     </div>
     <div class="svc-grid">
       <div class="svc reveal"><div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18M9 21h6"/></svg></div><h3>Sites e landing pages</h3><p>Páginas rápidas e responsivas que aparecem no Google e transformam visitas em contato.</p></div>
-      <div class="svc reveal"><div class="ico"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 21l2.1-5.4A8.5 8.5 0 1 1 21 11.5Z"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01"/></svg></div><h3>Chatbot no WhatsApp</h3><p>Atendimento automático 24 horas: responde dúvidas e qualifica clientes mesmo fora do expediente.</p></div>
-      <div class="svc reveal"><div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18M8 2v4M16 2v4M9 15l2 2 4-4"/></svg></div><h3>Agendamento online</h3><p>Clientes marcam sozinhos, com confirmação automática. Menos faltas, agenda cheia.</p></div>
+      <div class="svc reveal breve"><div class="ico"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 21l2.1-5.4A8.5 8.5 0 1 1 21 11.5Z"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01"/></svg></div><span class="tag-breve">em breve</span><h3>Chatbot no WhatsApp</h3><p>Atendimento automático 24 horas: responde dúvidas e qualifica clientes mesmo fora do expediente.</p></div>
+      <div class="svc reveal breve"><div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18M8 2v4M16 2v4M9 15l2 2 4-4"/></svg></div><span class="tag-breve">em breve</span><h3>Agendamento online</h3><p>Clientes marcam sozinhos, com confirmação automática. Menos faltas, agenda cheia.</p></div>
       <div class="svc reveal"><div class="ico"><svg viewBox="0 0 24 24"><path d="M5 4h14l-1.2 8.5a2 2 0 0 1-2 1.7H8.2a2 2 0 0 1-2-1.7L5 4Z"/><path d="M9 18a1.6 1.6 0 1 0 0 3M17 18a1.6 1.6 0 1 0 0 3M9 8h6"/></svg></div><h3>Cardápio e pedidos</h3><p>Cardápio digital e pedidos diretos, sem a taxa dos aplicativos de delivery.</p></div>
       <div class="svc reveal"><div class="ico"><svg viewBox="0 0 24 24"><path d="M12 2C8 2 5 5 5 9c0 5 7 13 7 13s7-8 7-13c0-4-3-7-7-7Z"/><circle cx="12" cy="9" r="2.4"/></svg></div><h3>Google e avaliações</h3><p>Perfil completo e bem posicionado no Google, com avaliações gerenciadas.</p></div>
-      <div class="svc reveal"><div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-2.7 1.1V21a2 2 0 1 1-4 0v-.1A1.6 1.6 0 0 0 7 19.4a1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.6 1.6 0 0 0-1.1-2.7H1a2 2 0 1 1 0-4h.1A1.6 1.6 0 0 0 4.6 7a1.6 1.6 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1A1.6 1.6 0 0 0 9 4.6h.1A1.6 1.6 0 0 0 11 3.1V3a2 2 0 1 1 4 0v.1A1.6 1.6 0 0 0 19 4.6l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1A1.6 1.6 0 0 0 21 11h.1a2 2 0 1 1 0 4H21a1.6 1.6 0 0 0-1.6 1Z"/></svg></div><h3>Automações e integrações</h3><p>WhatsApp, agenda, planilhas e sistemas conectados, trabalhando sozinhos.</p></div>
+      <div class="svc reveal breve"><div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-2.7 1.1V21a2 2 0 1 1-4 0v-.1A1.6 1.6 0 0 0 7 19.4a1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.6 1.6 0 0 0-1.1-2.7H1a2 2 0 1 1 0-4h.1A1.6 1.6 0 0 0 4.6 7a1.6 1.6 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1A1.6 1.6 0 0 0 9 4.6h.1A1.6 1.6 0 0 0 11 3.1V3a2 2 0 1 1 4 0v.1A1.6 1.6 0 0 0 19 4.6l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1A1.6 1.6 0 0 0 21 11h.1a2 2 0 1 1 0 4H21a1.6 1.6 0 0 0-1.6 1Z"/></svg></div><span class="tag-breve">em breve</span><h3>Automações e integrações</h3><p>WhatsApp, agenda, planilhas e sistemas conectados, trabalhando sozinhos.</p></div>
     </div>
   </div>
 </section>
@@ -339,7 +348,7 @@
         <div class="pname">Pro</div>
         <div class="ptag">Para negócios que dependem do digital no dia a dia.</div>
         <div class="price">a partir de <b>R$ 449</b><small>/mês</small></div>
-        <div class="sla">SLA · resposta em até 4 horas úteis</div>
+        <div class="sla">SLA · resposta em até 1 dia útil</div>
         <ul>
           <li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Tudo do Essencial</li>
           <li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Portal de chamados (GLPI)</li>
@@ -351,9 +360,9 @@
 
       <div class="plan reveal">
         <div class="pname">Gestão</div>
-        <div class="ptag">Para quem não pode ficar fora do ar.</div>
+        <div class="ptag">Para quem não pode ficar fora do ar. <b>Monitoramento em implantação.</b></div>
         <div class="price">a partir de <b>R$ 990</b><small>/mês</small></div>
-        <div class="sla">SLA · resposta em até 1 hora</div>
+        <div class="sla">SLA · resposta em até 4 horas úteis</div>
         <ul>
           <li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Tudo do Pro</li>
           <li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Monitoramento 24/7 (Zabbix + Grafana)</li>
@@ -371,9 +380,10 @@
 <section class="soft" id="infra">
   <div class="wrap">
     <div class="sec-head reveal">
-      <span class="eyebrow">Infraestrutura e monitoramento</span>
+      <span class="eyebrow">Infraestrutura e monitoramento · em implantação</span>
       <h2>Estrutura de gente grande, sem time de TI próprio.</h2>
       <p class="lead">Para empresas, clínicas e indústrias que já dependem de sistemas — e não podem correr risco.</p>
+      <p class="lead" style="font-size:15px;margin-top:10px"><b>Em implantação.</b> Estas duas frentes entram no plano Gestão e estão sendo montadas — fale com a gente para entrar na lista e acompanhar o cronograma.</p>
     </div>
     <div class="prod">
       <div class="prod-card reveal">
@@ -469,6 +479,7 @@
         <a href="#servicos">Serviços</a>
         <a href="#planos">Planos</a>
         <a href="#infra">Infraestrutura</a>
+        <a href="/privacidade.html">Privacidade</a>
       </div>
       <div class="foot-col">
         <h4>Contato</h4>
