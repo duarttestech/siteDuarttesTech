@@ -4,4 +4,5 @@ deployment:
     # Troque USUARIO pelo seu usuário do cPanel (HostGator)
     - export DEPLOYPATH=/home/math2216/duarttestech.com/
     - /bin/cp -f index.html $DEPLOYPATH
+    - /bin/cp -f privacidade.html $DEPLOYPATH
     - /bin/cp -Rf assets $DEPLOYPATH 2>/dev/null || true
