@@ -80,7 +80,7 @@ Coisas ainda marcadas como placeholder no `index.html` (busca-e-substitui):
 
 - **Domínio:** duarttestech.com (HostGator)
 - **E-mail:** contato@duarttestech.com
-- **Instagram:** @duarttes_tech
+- **Instagram:** @duarttes.tech
 
 ---
 
